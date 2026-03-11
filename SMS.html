@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage Pro · dark blue · role‑locked</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: outfit + inter for crisp look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Outfit', sans-serif;
+        }
+
+        body {
+            background: #0b1a2f;  /* deep navy base */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: background 0.2s;
+        }
+
+        /* main app container — dark blue glass */
+        .app-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(8, 22, 45, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 3rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(71, 145, 255, 0.15) inset;
+            padding: 2rem 2.2rem;
+            border: 1px solid rgba(100, 180, 255, 0.2);
+        }
+
+        /* ========== HEADER ========== */
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, #1f4b8a, #0f2d5a);
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 8px 20px #00000050, 0 0 0 1px #3773c8 inset;
+        }
+
+        .logo-area h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #b8d6ff, #7bb2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 5px #00000040;
+        }
+
+        /* role badges (only visible after login) */
+        .role-badge {
+            background: #122b4a;
+            border-radius: 60px;
+            padding: 0.6rem 2rem 0.6rem 1.5rem;
+            border: 1px solid #2d68b0;
+            box-shadow: 0 0 12px #1e5aae50;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: #c6e0ff;
+            font-weight: 600;
+        }
+
+        .role-badge i {
+            font-size: 1.5rem;
+            color: #7bb6ff;
+        }
+
+        .role-badge span {
+            color: white;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        /* ===== AUTH SECTION (visible only when logged out) ===== */
+        .auth-section {
+            background: #0a1d3b;
+            border-radius: 2.5rem;
+            padding: 2.2rem 2.2rem 2rem;
+            margin-bottom: 2.2rem;
+            border: 1px solid #2f578b;
+            box-shadow: 0 20px 35px -5px #00000080, 0 0 0 1px #3b6bb0 inset;
+            transition: all 0.2s;
+        }
+
+        .toggle-auth {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: #0b1f3a;
+            padding: 0.4rem;
+            border-radius: 50px;
+            border: 1px solid #2b5285;
+            width: fit-content;
+        }
+
+        .auth-switch {
+            border: none;
+            background: transparent;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #9bb9e6;
+            transition: 0.15s;
+        }
+
+        .auth-switch.active {
+            background: #1d4a8b;
+            color: white;
+            box-shadow: 0 5px 15px #00000060, 0 0 0 1px #78b1ff;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: flex-end;
+        }
+
+        .input-group {
+            flex: 1 1 220px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            color: #b0ceff;
+            display: block;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.9rem 1.3rem;
+            background: #112c4e;
+            border: 1.5px solid #2d5582;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            color: white;
+            transition: 0.15s;
+        }
+
+        .input-group input::placeholder {
+            color: #6d8fc0;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #79b5ff;
+            outline: none;
+            background: #16375f;
+            box-shadow: 0 0 0 3px #1d4d8840;
+        }
+
+        .input-group select {
+            color: white;
+            background: #112c4e;
+        }
+
+        .auth-action-btn {
+            background: linear-gradient(145deg, #1f5090, #123a68);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.9rem 2.8rem;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 12px 20px -10px #000000cc, 0 0 0 1px #4b89d8 inset;
+            transition: 0.1s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .auth-action-btn:hover {
+            background: linear-gradient(145deg, #2e65aa, #164883);
+            transform: scale(1.02);
+            box-shadow: 0 14px 25px -8px #000000;
+        }
+
+        .info-message {
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            background: #0b2647;
+            color: #c2ddff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            display: inline-block;
+            border: 1px solid #2b619e;
+        }
+
+        /* ===== DASHBOARD PANELS (visible after login) ===== */
+        .dashboard-container {
+            display: none;  /* hidden until login */
+        }
+
+        .dashboard-container.logged-in {
+            display: block;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e2eeff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-shadow: 0 2px 5px #00000060;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: #0f2545;
+            border-radius: 2.2rem;
+            padding: 1.6rem 1.5rem;
+            border: 1px solid #2a5791;
+            box-shadow: 0 20px 30px -12px #000000, 0 0 0 1px #345f9f inset;
+            transition: 0.15s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 22px 35px -10px #000000, 0 0 0 1.5px #5184cf inset;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .card-header i {
+            font-size: 1.9rem;
+            color: #aac9ff;
+            background: #1d3d68;
+            padding: 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #3c71b5;
+        }
+
+        .card-header h3 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #d3e6ff;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            background: #1a3257;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            margin: 0.7rem 0;
+            font-weight: 500;
+            color: #bfdaff;
+            border: 1px solid #2d5693;
+        }
+
+        .badge {
+            background: #1f4682;
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #6081c0;
+        }
+
+        .btn-sm {
+            background: #1e3f6e;
+            border: 1px solid #3c70b6;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #deecff;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+            transition: 0.1s;
+            box-shadow: 0 5px 12px #00000030;
+        }
+
+        .btn-sm i { margin-right: 0.4rem; color: #9ac0ff; }
+        .btn-sm:hover {
+            background: #2c5696;
+            color: white;
+            border-color: #79abff;
+        }
+
+        .attendance-list span, .student-item {
+            background: #173456;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 0.2rem 0.2rem;
+            border: 1px solid #376bb0;
+            color: #d0e4ff;
+        }
+
+        .fee-calc {
+            background: #17375f;
+            border-radius: 1.8rem;
+            padding: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e6f0ff;
+            border: 1px solid #3b72c0;
+        }
+
+        hr {
+            border: 1px solid #284e82;
+            margin: 1.2rem 0;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .roll-tag {
+            background: #1a4080;
+            color: white;
+            border-radius: 30px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.9rem;
+            border: 1px solid #578de0;
+        }
+
+        .message-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #7f9fd0;
+        }
+
+        /* sign out button */
+        .signout-btn {
+            background: transparent;
+            border: 1.5px solid #3865a5;
+            color: #bfdbff;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .signout-btn:hover {
+            background: #1e3f70;
+            color: white;
+        }
+
+        /* hidden utility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <!-- header with logo and sign out (visible only after login) -->
+    <div class="header-row">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h1>School Management System</h1>
+        </div>
+
+        <!-- role badge + sign out (visible when logged in) -->
+        <div id="roleBadgeContainer" style="display: flex; align-items: center; gap: 1rem;">
+            <div class="role-badge" id="roleBadge">
+                <i id="roleIcon" class="fas fa-chalkboard-teacher"></i>
+                <span id="roleDisplay">teacher</span>
+            </div>
+            <button class="signout-btn" id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+        </div>
+    </div>
+
+    <!-- AUTH SECTION (Sign in / Sign up) - visible only when logged out -->
+    <div id="authSection" class="auth-section">
+        <div class="toggle-auth">
+            <button class="auth-switch active" id="signInTab">Sign In</button>
+            <button class="auth-switch" id="signUpTab">Sign Up</button>
+        </div>
+
+        <!-- sign in form (visible by default) -->
+        <div id="signinForm" class="auth-form">
+            <div class="input-group">
+                <label><i class="far fa-envelope"></i> Email</label>
+                <input type="email" id="loginEmail" placeholder="michael@edu.edu" value="demo@school.com">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" value="password123">
+            </div>
+            <button class="auth-action-btn" id="signInBtn"><i class="fas fa-arrow-right-to-bracket"></i> Sign In</button>
+        </div>
+
+        <!-- sign up form (hidden initially) -->
+        <div id="signupForm" class="auth-form" style="display: none;">
+            <div class="input-group">
+                <label>Full name</label>
+                <input type="text" id="signupName" placeholder="Alex Johnson">
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="signupEmail" placeholder="alex@edu.edu">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="signupPassword" placeholder="create strong">
+            </div>
+            <div class="input-group">
+                <label>Role</label>
+                <select id="signupRole">
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+            <button class="auth-action-btn" id="signUpBtn"><i class="fas fa-user-plus"></i> Register</button>
+        </div>
+        <div class="info-message" id="authMessage"><i class="fas fa-info-circle"></i> Please sign in or sign up</div>
+    </div>
+
+    <!-- DASHBOARD CONTAINER (hidden until login) -->
+    <div id="dashboardContainer" class="dashboard-container">
+
+        <!-- TEACHER PANEL (will be shown based on role) -->
+        <div id="teacherPanel" class="dashboard-panel">
+            <div class="panel-title"><i class="fas fa-chalkboard"></i> Teacher dashboard — <span id="teacherName">Mr. Davis</span></div>
+            <div class="card-grid">
+                <!-- add students -->
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-user-plus"></i><h3>Add students & data</h3></div>
+                    <div class="data-row"><span>New student:</span> <span class="badge">form</span></div>
+                    <div><input type="text" placeholder="full name" style="width:100%; padding:0.7rem; border-radius:30px; background:#1a3a62; border:1px solid #3466aa; color:white;"></div>
+                    <div style="display:flex; gap:0.5rem; margin-top:0.7rem;">
+                        <button class="btn-sm"><i class="fas fa-save"></i> Save student</button>
+                        <button class="btn-sm"><i class="fas fa-upload"></i> import</button>
+                    </div>
+                    <hr>
+                    <div><strong>📋 recent entries:</strong> Sara , Orhan (Gr.9)</div>
+                </div>
+                <!-- add courses -->
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-book-open"></i><h3>Add courses</h3></div>
+                    <div class="data-row"><span>Mathematics X</span> <span>11 students</span></div>
+                    <div class="data-row"><span>Physics grade 11</span> <span>8 students</span></div>
+                    <div><button class="btn-sm"><i class="fas fa-plus-circle"></i> New course</button></div>
+                </div>
+                <!-- attendance -->
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-check-double"></i><h3>Take attendance</h3></div>
+                    <div class="attendance-list">
+                        <span class="student-item"><i class="far fa-circle"></i> Halima</span>
+                        <span class="student-item"><i class="far fa-circle"></i> Ertugral</span>
+                        <span class="student-item"><i class="far fa-check-circle" style="color:#9ad3ff;"></i> Bala </span>
+                        <span class="student-item"><i class="far fa-circle"></i> Haram</span>
+                        <span class="student-item"><i class="far fa-circle"></i> fatima</span>
+                    </div>
+                    <button class="btn-sm"><i class="fas fa-camera"></i> mark all present</button>
+                    <div style="margin-top:10px;"><i class="fas fa-calendar-alt"></i> 06 Mar 2026, 09:30 AM</div>
+                </div>
+            </div>
+            <div style="background: #102a4a; border-radius: 2rem; padding: 1.5rem; border:1px solid #295394;">
+                <h4><i class="fas fa-address-card"></i> Student profiles</h4>
+                <div style="display: flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                    <span class="badge" style="background:#1c4380;">Sara Gr.10 | Roll 12</span>
+                    <span class="badge" style="background:#1c4380;">Nimra Gr.10 | Roll 14</span>
+                    <span class="badge" style="background:#1c4380;">Aliya Gr.9 | Roll 7</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN PANEL -->
+        <div id="adminPanel" class="dashboard-panel">
+            <div class="panel-title"><i class="fas fa-user-cog"></i> Admin control — <span id="adminName">Mrs. Chen</span></div>
+            <div class="card-grid">
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-calculator"></i><h3>Fee calculator</h3></div>
+                    <div class="fee-calc">
+                        <div>Total monthly fees</div>
+                        <div style="font-size:2rem;">$ 48,250</div>
+                        <div>128 students · 14 classes</div>
+                    </div>
+                    <button class="btn-sm"><i class="fas fa-file-invoice"></i> generate report</button>
+                </div>
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-flask"></i><h3>Subjects / sections</h3></div>
+                    <div class="data-row"><span>Mathematics (5 sections)</span> <span>120 std</span></div>
+                    <div class="data-row"><span>Physics (3 sections)</span> <span>74 std</span></div>
+                    <button class="btn-sm"><i class="fas fa-chart-simple"></i> recalculate subjects</button>
+                </div>
+                <div class="feature-card">
+                    <div class="card-header"><i class="fas fa-id-card-clip"></i><h3>Register student</h3></div>
+                    <div style="background:#173458; border-radius: 1.5rem; padding: 1rem;">
+                        <div><i class="fas fa-user"></i> <strong>Taiba</strong> (new)</div>
+                        <div class="flex-row">class 10 · section B · <span class="roll-tag">roll #23</span></div>
+                        <div><i class="fas fa-user"></i> <strong>Iqra </strong> class 9 · section A · roll #8</div>
+                    </div>
+                    <button class="btn-sm"><i class="fas fa-pen-to-square"></i> edit roll/class</button>
+                    <button class="btn-sm"><i class="fas fa-plus"></i> new registration</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STUDENT PANEL -->
+        <div id="studentPanel" class="dashboard-panel">
+            <div class="panel-title"><i class="fas fa-user-graduate"></i> Student view — <span id="studentName">Emma Watson</span> (Gr.10, Roll 12)</div>
+            <div class="card-grid">
+                <div class="feature-card"><i class="fas fa-book"></i> <strong>My courses:</strong> Math, Physics, English</div>
+                <div class="feature-card"><i class="fas fa-calendar-check"></i> Attendance: 92% (this term)</div>
+                <div class="feature-card"><i class="fas fa-id-card"></i> section: B · fee paid: ✓</div>
+            </div>
+            <div style="background: #0f284a; border-radius:2rem; padding:1.5rem; border:1px solid #2b5593;">
+                <i class="fas fa-school"></i> You are registered. Contact admin for changes.
+            </div>
+        </div>
+    </div>
+
+    <div class="message-footer" id="footerMessage">
+        <i class="fas fa-shield-alt"></i> dark blue · role‑locked after sign up
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ------ DOM elements ------
+        const authSection = document.getElementById('authSection');
+        const dashboardContainer = document.getElementById('dashboardContainer');
+        const roleBadgeContainer = document.getElementById('roleBadgeContainer');
+        const roleIcon = document.getElementById('roleIcon');
+        const roleDisplay = document.getElementById('roleDisplay');
+        const signOutBtn = document.getElementById('signOutBtn');
+
+        // panels
+        const teacherPanel = document.getElementById('teacherPanel');
+        const adminPanel = document.getElementById('adminPanel');
+        const studentPanel = document.getElementById('studentPanel');
+
+        // auth tabs
+        const signInTab = document.getElementById('signInTab');
+        const signUpTab = document.getElementById('signUpTab');
+        const signinForm = document.getElementById('signinForm');
+        const signupForm = document.getElementById('signupForm');
+        const authMessage = document.getElementById('authMessage');
+
+        // inputs
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const signupName = document.getElementById('signupName');
+        const signupEmail = document.getElementById('signupEmail');
+        const signupPassword = document.getElementById('signupPassword');
+        const signupRole = document.getElementById('signupRole');
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+
+        // name placeholders
+        const teacherNameSpan = document.getElementById('teacherName');
+        const adminNameSpan = document.getElementById('adminName');
+        const studentNameSpan = document.getElementById('studentName');
+
+        // ------ state ------
+        let loggedIn = false;           // true after sign in/up
+        let currentRole = 'teacher';    // will be set on sign up / sign in
+        let userName = 'Mr. Davis';     // fallback
+
+        // hide/show auth & dashboard based on login state
+        function updateUILoginState() {
+            if (loggedIn) {
+                authSection.classList.add('hidden');
+                dashboardContainer.classList.add('logged-in');
+                roleBadgeContainer.style.display = 'flex';
+                // set correct panel
+                teacherPanel.style.display = 'none';
+                adminPanel.style.display = 'none';
+                studentPanel.style.display = 'none';
+                if (currentRole === 'teacher') teacherPanel.style.display = 'block';
+                else if (currentRole === 'admin') adminPanel.style.display = 'block';
+                else if (currentRole === 'student') studentPanel.style.display = 'block';
+
+                // update badge icon and text
+                let iconClass = 'fa-chalkboard-teacher';
+                if (currentRole === 'admin') iconClass = 'fa-user-tie';
+                if (currentRole === 'student') iconClass = 'fa-user-graduate';
+                roleIcon.className = `fas ${iconClass}`;
+                roleDisplay.innerText = currentRole;
+
+                // optional: update name fields based on role
+                if (currentRole === 'teacher' && teacherNameSpan) teacherNameSpan.innerText = userName.includes(' ') ? userName : 'Mr. Davis';
+                if (currentRole === 'admin' && adminNameSpan) adminNameSpan.innerText = userName.includes(' ') ? userName : 'Mrs. Chen';
+                if (currentRole === 'student' && studentNameSpan) studentNameSpan.innerText = userName.includes(' ') ? userName : 'Emma Watson';
+
+                authMessage.innerText = `✅ Signed in as ${currentRole}`;
+            } else {
+                authSection.classList.remove('hidden');
+                dashboardContainer.classList.remove('logged-in');
+                roleBadgeContainer.style.display = 'none';
+            }
+        }
+
+        // ------ sign in (demo: just use role selected in signup? but for simplicity we can pick teacher/admin/student based on email keyword? We'll use signup role stored) ------
+        // For demo: we simulate that after sign in, role is based on stored role. To make it flexible, we'll use a fake 'storedRole' variable.
+        // We'll also use signup to set a role. Let's have a memory object.
+        let mockUsers = [
+            { email: 'teacher@demo.com', password: '1', role: 'teacher', name: 'Mr. Davis' },
+            { email: 'admin@demo.com', password: '1', role: 'admin', name: 'Mrs. Chen' },
+            { email: 'student@demo.com', password: '1', role: 'student', name: 'Emma Watson' },
+        ];
+
+        // sign in button
+        signInBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const pwd = loginPassword.value.trim();
+
+            // simple demo: accept any non-empty, or match mock
+            const found = mockUsers.find(u => u.email === email && u.password === pwd);
+            if (found) {
+                currentRole = found.role;
+                userName = found.name;
+                loggedIn = true;
+                updateUILoginState();
+                authMessage.innerHTML = `<i class="fas fa-check-circle"></i> Welcome back, ${userName}`;
+            } else if (email && pwd) {
+                // fallback: use role from signupRole? but better: if unknown, set teacher as default
+                currentRole = 'teacher';
+                userName = email.split('@')[0] || 'Teacher';
+                loggedIn = true;
+                updateUILoginState();
+                authMessage.innerHTML = `<i class="fas fa-check-circle"></i> Signed in as ${currentRole} (demo)`;
+            } else {
+                alert('please fill both fields');
+            }
+        });
+
+        // sign up button: create new user (store role permanently)
+        signUpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const name = signupName.value.trim();
+            const email = signupEmail.value.trim();
+            const pwd = signupPassword.value.trim();
+            const role = signupRole.value;
+
+            if (!name || !email || !pwd) {
+                alert('please fill all fields');
+                return;
+            }
+
+            // add to mock users (optional)
+            mockUsers.push({ email, password: pwd, role, name });
+            // set current role from signup choice
+            currentRole = role;
+            userName = name;
+            loggedIn = true;
+            updateUILoginState();
+            authMessage.innerHTML = `<i class="fas fa-check-circle"></i> Registered and signed in as ${role}`;
+        });
+
+        // sign out
+        signOutBtn.addEventListener('click', () => {
+            loggedIn = false;
+            updateUILoginState();
+            // reset forms
+            signinForm.style.display = 'flex';
+            signupForm.style.display = 'none';
+            signInTab.classList.add('active');
+            signUpTab.classList.remove('active');
+            authMessage.innerHTML = `<i class="fas fa-info-circle"></i> Signed out. Please sign in again.`;
+        });
+
+        // tab switching
+        signInTab.addEventListener('click', () => {
+            signInTab.classList.add('active');
+            signUpTab.classList.remove('active');
+            signinForm.style.display = 'flex';
+            signupForm.style.display = 'none';
+        });
+
+        signUpTab.addEventListener('click', () => {
+            signUpTab.classList.add('active');
+            signInTab.classList.remove('active');
+            signupForm.style.display = 'flex';
+            signinForm.style.display = 'none';
+        });
+
+        // extra interactive demo for buttons
+        document.querySelectorAll('.btn-sm').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const txt = btn.innerText.trim();
+                if (txt.includes('mark all present')) alert('✅ attendance marked');
+                else if (txt.includes('Save student')) alert('📘 student saved (demo)');
+                else if (txt.includes('generate report')) alert('📊 fee report demo');
+                else if (txt.includes('recalculate subjects')) alert('🧮 subjects recalculated');
+                else if (txt.includes('edit roll/class')) alert('🔢 edit roll & section');
+                else if (txt.includes('New course')) alert('📚 course creation dialog');
+            });
+        });
+
+        // click on student items effect
+        document.querySelectorAll('.student-item').forEach(el => {
+            el.addEventListener('click', () => {
+                el.style.background = el.style.background ? '' : '#285a9c';
+            });
+        });
+
+        // initial state: logged out, auth visible
+        loggedIn = false;
+        updateUILoginState();
+    })();
+</script>
+</body>
+</html>
